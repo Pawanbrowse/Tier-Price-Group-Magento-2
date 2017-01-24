@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+     <update handle="editor"/>
+    <body>
+	   <referenceContainer name="content">
+            <block class="Ocodewire\Pricegroup\Block\Adminhtml\Pricegroup\Edit" name="volusionorder_volusionorder_edit"/>
+            <!--<block class="Magento\Catalog\Block\Adminhtml\Product\Edit\Tab\Price\Tier" name="volusionorder_volusionorder_edit"/>-->
+        </referenceContainer>
+		 <referenceContainer name="left">
+            <block class="Ocodewire\Pricegroup\Block\Adminhtml\Pricegroup\Edit\Tabs" name="volusionorder_volusionorder_edit_tabs">
+				<block class="Ocodewire\Pricegroup\Block\Adminhtml\Pricegroup\Edit\Tab\edit" name="volusionorder_volusionorder_edit_tab_edit"/>
+				 <action method="addTab">
+                    <argument name="name" xsi:type="string">edit_section</argument>
+                    <argument name="block" xsi:type="string">volusionorder_volusionorder_edit_tab_edit</argument>
+                </action>
+				<!--CedAddTab-->
+			</block>
+        </referenceContainer>
+    </body>
+</page>

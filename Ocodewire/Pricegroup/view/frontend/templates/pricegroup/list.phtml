@@ -1,0 +1,40 @@
+<?php $_questions = $this->getVolusionorders(); ?>
+<?php if ($_questions->getSize() > 0) :?>
+<div class="questions left-sidebar ask">	
+  <div class="panel-group category-products" id="accordian">
+	<h2>Frequently Asked Questions</h2>
+	<div class="head_outer">
+		<?php foreach ($_questions as $_question) : ?>
+		<div>
+		  <div class="heading_text">
+			<h4><?php echo $_question->getTitle(); ?><a href="javascript:;"><i class="fa fa-plus-circle"></i></a></h4>
+		  </div>
+		  <div class="heading_text_in">
+			<p><?php echo $_question->getDescription(); ?></p>
+		  </div>
+		</div>  
+		 <?php endforeach;?>
+	</div>
+  </div>    
+</div>
+<style type="text/css">
+.questions .fa-plus-circle{ margin-left:7px;}
+
+.questions .heading_text_in{display:none;}
+</style>
+<script type="text/javascript">
+require(['jquery'], function(){		
+	jQuery('.heading_text h4 a').on('click',function(){		
+		if(jQuery(this).parent().parent().parent().children('.heading_text_in').is(":visible"))
+		{
+			jQuery(this).parent().parent().parent().children('.heading_text_in').slideUp('slow');
+		}
+		else
+		{
+			jQuery('.heading_text_in').slideUp('slow');
+			jQuery(this).parent().parent().parent().children('.heading_text_in').slideDown('slow');
+		}
+	});
+});
+</script>
+<?php endif;?>

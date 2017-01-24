@@ -1,0 +1,49 @@
+<?php
+ if($block->customerLoggedIn()): ?>
+<h3>Previous Orders</h3>  
+<?php $_orders = $block->getVolusionOrder(); ?>
+<?php //echo '<pre>'; print_r($_orders->getData());die;?>
+<?php //echo $block->getChildHtml('info');?>
+<?php if ($_orders && count($_orders)): ?>
+    <div class="table-wrapper orders-history old-orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Orders') ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Order #') ?></th>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Shipping Name') ?></th>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Email') ?></th>
+                    <th scope="col" class="col idg"><?php /* @escapeNotVerified */ echo __('Total Payment') ?></th>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Invoice') ?></th>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Date') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($_orders as $_order): ?>
+                    <tr>
+                     <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $_order->getOrderId() ?></td>
+                     <td data-th="<?php echo $block->escapeHtml(__('Shipping Name')) ?>" class="col id"><?php echo $_order->getShippingName() ?></td> 
+                     <td data-th="<?php echo $block->escapeHtml(__('Shipping Name')) ?>" class="col id"><?php echo $_order->getEmail() ?></td>
+                     
+                    <td data-th="<?php echo $block->escapeHtml(__('Amount Paid')) ?>" class="col id"><?php echo $_order->getTotalAmount() ?></td>
+                    <?php
+                    $file = $this->getUrl('pub/media')."orders/".$_order->getOrderId().".pdf";
+                    //$file = "http://dev2.sanspot.com/pub/media/orders/12758.pdf";
+              
+                       ?>
+                       <td data-th="<?php echo $block->escapeHtml(__('Download')) ?>" class="col id"><a target="_blank" href="<?php echo $file; ?> ">Download</a></td>
+                      
+                     
+                    <td data-th="<?php echo $block->escapeHtml(__('Order Date')) ?>" class="col id"><?php echo date("dS F Y H:i",strtotime($_order->getOrderDate())) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You have placed no orders.'); ?></span></div>
+<?php endif ?>
+<?php endif; ?>

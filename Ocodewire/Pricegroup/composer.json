@@ -1,0 +1,27 @@
+{
+    "name": "ocodewire/pricegroup",
+    "description": "Custom module that will enhance magento to tier price functionality.",
+    "require": {
+        "magento/framework": "~100.0",
+		"magento/magento-composer-installer": "*"
+    },
+    "type": "magento2-module",
+    "version": "3.0.3",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Ocodewire\\Pricegroup\\": ""
+        }
+    },
+	"extra": {
+        "map": [
+            [
+                "*",
+                "Ocodewire/Pricegroup"
+            ]
+        ]
+    }
+}

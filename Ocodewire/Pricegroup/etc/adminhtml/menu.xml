@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Ocodewire. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+    <menu>
+        <add id="Ocodewire_Pricegroup::ocodewire_pricegroup_index" title="Old Store Orders" module="Ocodewire_Pricegroup" sortOrder="10" dependsOnModule="Ocodewire_Pricegroup" action="pricegroup/pricegroup/index" resource="Ocodewire_Pricegroup::ocodewire_pricegroup_index"/>
+<!--AddMenu-->
+    </menu>
+</config>

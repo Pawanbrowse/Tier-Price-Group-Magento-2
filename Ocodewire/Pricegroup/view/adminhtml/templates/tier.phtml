@@ -1,0 +1,103 @@
+<?php $_htmlId = "custom"; 
+$_showWebsite = false;
+$_readonly = false;
+$_htmlClass = "cus_price";
+$_htmlName  = "cus_price";
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+$item = $objectManager->create('Ocodewire\Pricegroup\Model\Pricegroup');
+$item->load($this->getRequest()->getParam('id'));
+$priceData = array();
+if($item->getId())
+{
+    $priceData = json_decode($item->getPriceData());
+}
+
+?>
+<input type="hidden" name="id" value="<?php echo $this->getRequest()->getParam('id'); ?>" >
+<div class="field" id="attribute-price" data-apply-to="">
+    <div class="control">
+        <table class="admin__control-table tiers_table" id="tiers_table">
+            <thead>
+                <tr>
+                    <th class="col-qty required"><?php /* @escapeNotVerified */ echo __('Quantity') ?></th>
+                    <th class="col-price required"><?php /* @escapeNotVerified */ echo __('Item Price') ?></th>
+                    <th class="col-delete"><?php /* @escapeNotVerified */ echo __('Action') ?></th>
+                </tr>
+            </thead>
+            <tbody id="<?php /* @escapeNotVerified */ echo $_htmlId ?>_container"></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="col-actions-add">
+                        <button type="button" onClick="tierPriceControl.addItem('1','1');">
+                            <span>Add</span>
+                        </button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+<script>
+require([
+    'mage/template',
+    "prototype",
+    "mage/adminhtml/form"
+], function (mageTemplate) {
+   
+   var tierPriceRowTemplate = '<tr>'
+    + '<td class="col-qty">'
+        + '<input class="<?php /* @escapeNotVerified */ echo $_htmlClass ?> qty required-entry validate-greater-than-zero" type="text" name="<?php /* @escapeNotVerified */ echo $_htmlName ?>[<%- data.index %>][price_qty]" value="<%- data.qty %>" id="tier_price_row_<%- data.index %>_qty" />'
+    + '</td>'
+    + '<td class="col-qty"><input class="<?php /* @escapeNotVerified */ echo $_htmlClass ?> required-entry"  type="text" name="<?php /* @escapeNotVerified */ echo $_htmlName ?>[<%- data.index %>][price]" value="<%- data.price %>" id="tier_price_row_<%- data.index %>_price" /></td>'
+    + '<td class="col-delete"><input type="hidden" name="<?php /* @escapeNotVerified */ echo $_htmlName ?>[<%- data.index %>][delete]" class="delete" value="" id="tier_price_row_<%- data.index %>_delete" />'
+    + '<button title="<?php /* @escapeNotVerified */ echo $block->escapeHtml(__('Delete Tier')); ?>" type="button" class="action-delete icon-btn delete-product-option" id="tier_price_row_<%- data.index %>_delete_button" onclick="return tierPriceControl.deleteItem(event);">'
+    + '<span><?php /* @escapeNotVerified */ echo __("Delete") ?></span></button></td>'
+    + '</tr>';
+
+
+   var tierPriceControl = {
+    template: mageTemplate(tierPriceRowTemplate),
+    itemsCount: 0,
+    addItem : function () {
+        var data = {
+            qty: '',
+            price: '',
+            readOnly: false,
+            index: this.itemsCount++
+        };
+
+        if(arguments.length >= 2) {
+            data.qty        = arguments[0];
+            data.price      = arguments[1];
+        }
+
+        Element.insert($('<?php /* @escapeNotVerified */ echo $_htmlId ?>_container'), {
+            bottom : this.template({
+                data: data
+            })
+        });
+        
+    },
+    deleteItem: function(event) {
+        var tr = Event.findElement(event, 'tr');
+        if (tr) {
+            Element.remove(tr);
+        }
+        return false;
+    }
+};   
+<?php 
+if(count($priceData)>0)
+{
+
+foreach ($priceData as $_item): ?>
+tierPriceControl.addItem('<?php echo $_item->price_qty; ?>', '<?php echo $_item->price; ?>');
+<?php endforeach; 
+
+} ?> 
+window.tierPriceControl = tierPriceControl;
+});
+</script>
+    </div>
+</div>
+
+
