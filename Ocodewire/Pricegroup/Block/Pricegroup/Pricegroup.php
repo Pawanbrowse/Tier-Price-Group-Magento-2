@@ -24,12 +24,6 @@ class Pricegroup extends Template
     
     protected $httpContext;
 
-    /**
-     * @param \Sample\News\Model\Resource\Author\CollectionFactory $authorCollectionFactory
-     * @param \Magento\Framework\UrlFactory $urlFactory
-     * @param Template\Context $context
-     * @param array $data
-     */
     public function __construct(
         ItemsCollectionFactory $itemsCollectionFactory,
         \Magento\Customer\Model\Session $customerSession,
@@ -92,8 +86,4 @@ class Pricegroup extends Template
     {
         return $this->_helperView->getCustomerName($this->getCustomer());
     }
-    /*
-    public function beforeToHtml(\Magento\Theme\Block\Html\Topmenu $originalBlock) {
-      $originalBlock->setTemplate('Ocodewire_Megamenu::megamenu/topmenu.phtml');
-    }*/
 }
